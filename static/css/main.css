@@ -1,0 +1,90 @@
+body {
+    background-color: slategray;
+    text-align: center;
+}
+
+p {
+    color: white;
+    font-family: Shanti;
+    font-size: 1.2em;
+    margin: 20px;
+}
+
+img {
+    margin: 60px 0 30px 0;
+    width: 250px;
+}
+
+input {
+    width: 50px;
+    height: 50px;
+    margin: 2px;
+    border: none;
+    border-radius: 10px;
+    font-family: Shanti;
+    text-align: center;
+    font-size: 1.3em;
+}
+
+input:focus {
+    /* border: solid 1px #00FFCE; */
+    outline: none;
+    background-color: #b6f1ff;
+
+}
+
+#solve_button {
+    background-color: palevioletred;
+    color: white;
+    width: 200px;
+}
+
+.main_buttons {
+    background-color: palevioletred;
+    color: white;
+    width: 200px;
+}
+
+.main_buttons:hover {
+    background-color: mediumvioletred;
+    cursor: pointer;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+    /* justify-content: space-between; */
+    justify-content: center;
+
+  }
+
+.output_numbers {
+    margin-left:auto;
+    margin-right:auto;
+    border: none;
+  }
+
+td {
+    width: 55px;
+    height: 52px;
+    line-height: 52px;
+    margin: 2px;
+    border: none;
+    border-radius: 10px;
+    font-family: Shanti;
+    text-align: center;
+    font-size: 1.8em;
+    background-color: #b6f1ff;
+    vertical-align: middle;    
+}
+
+
+#input_grid {
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.square_type1 {
+    background-color: #cacad3;
+}

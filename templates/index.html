@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Say Hello</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+        <!-- <link rel="shortcut icon" href="#"> -->
+    </head>
+    <body>
+        <!-- <img src="https://raw.githubusercontent.com/MariyaSha/SimpleGreetingApp/main/logo.png"> -->
+        <!-- <img src="https://static.wikia.nocookie.net/drebedenboi/images/c/cc/%D0%91%D1%80%D0%B0%D1%82%D0%B8%D1%88%D0%BA%D0%B0.jpg/revision/latest/scale-to-width-down/670?cb=20180315162849&path-prefix=ru"> -->
+        <br>
+        <form action="solve_sudoku" method="post">
+            {% for message in get_flashed_messages()%}
+                <p> {{message}}</p>
+                {% endfor %}
+            <br>
+            <div class="grid-container" id="input_grid">
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x1">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x2">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x3">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x4">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x5">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x6">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x7">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x8">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x9">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x10">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x11">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x12">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x13">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x14">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x15">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x16">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x17">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x18">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x19">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x20">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x21">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x22">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x23">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x24">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x25">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x26">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x27">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x28">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x29">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x30">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x31">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x32">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x33">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x34">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x35">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x36">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x37">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x38">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x39">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x40">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x41">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x42">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x43">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x44">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x45">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x46">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x47">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x48">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x49">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x50">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x51">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x52">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x53">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x54">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x55">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x56">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x57">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x58">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x59">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x60">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x61">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x62">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x63">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x64">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x65">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x66">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x67">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x68">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x69">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x70">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x71">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x72">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x73">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x74">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x75">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x76">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x77">
+                </div>
+                <div class="grid-item">
+                    <input type="number" name="x78">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x79">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x80">
+                </div>
+                <div class="grid-item">
+                    <input type="number" class="square_type1" name="x81">
+                </div>
+            </div>
+            <br>
+            <input type="submit" class="main_buttons" value="SOLVE!" id="solve_button">
+        </form>
+    </body>
+</html>
