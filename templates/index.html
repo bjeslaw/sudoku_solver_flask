@@ -2,15 +2,14 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Say Hello</title>
+        <title>Sudoku Solver</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
-        <!-- <link rel="shortcut icon" href="#"> -->
     </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <body>
-        <!-- <img src="https://raw.githubusercontent.com/MariyaSha/SimpleGreetingApp/main/logo.png"> -->
-        <!-- <img src="https://static.wikia.nocookie.net/drebedenboi/images/c/cc/%D0%91%D1%80%D0%B0%D1%82%D0%B8%D1%88%D0%BA%D0%B0.jpg/revision/latest/scale-to-width-down/670?cb=20180315162849&path-prefix=ru"> -->
-        <br>
-        <form action="solve_sudoku" method="post">
+        <div id="loading"></div>
+        <form id="content" action="solve_sudoku" method="post">
+            <br>
             {% for message in get_flashed_messages()%}
                 <p> {{message}}</p>
                 {% endfor %}
@@ -261,7 +260,16 @@
                 </div>
             </div>
             <br>
-            <input type="submit" class="main_buttons" value="SOLVE!" id="solve_button">
+            <input type="submit" class="main_buttons" value="SOLVE!" id="solve_button" onclick="loading();">
         </form>
+    
     </body>
+
+    <script type="text/javascript">// <![CDATA[
+        function loading(){
+            $("#loading").show();
+            $("#content").hide();       
+        }
+        // ]]></script>
+        
 </html>

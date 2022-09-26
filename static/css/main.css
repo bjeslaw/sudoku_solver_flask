@@ -33,11 +33,11 @@ input:focus {
 
 }
 
-#solve_button {
+/* #solve_button {
     background-color: palevioletred;
     color: white;
     width: 200px;
-}
+} */
 
 .main_buttons {
     background-color: palevioletred;
@@ -88,3 +88,15 @@ td {
 .square_type1 {
     background-color: #cacad3;
 }
+
+
+div#loading {
+    width: 95vw;
+    height: 95vh;
+    display: none;
+    background: url(/static/loading.gif) no-repeat;
+    background-size: 20%;
+    background-position: center;
+    cursor: wait;
+    mix-blend-mode: screen;  
+    }

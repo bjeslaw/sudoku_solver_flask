@@ -4,7 +4,7 @@ import numpy as np
 
 app = Flask(__name__)
 app.secret_key = "secret_key_1755"
-
+## secret key means nothing, needing to avoid some stupid error 
 
 #######################################################################################################################################
 def iter_solver(df, print_status = False): 
@@ -25,7 +25,7 @@ def iter_solver(df, print_status = False):
             for j in df_possible.columns: 
                 if len(df_possible.loc[i,j]) == 1: 
                     drop_value = df_possible.loc[i,j][0]
-        #             мб тут нужно не len(x) > 1, а именно те самые i,j обходить только
+        #             maybe here we need not len(x) > 1 but exactly check i,j only
                     df_possible.loc[i,:] = df_possible.loc[i,:].apply(lambda x: [y for y in x if y != drop_value] if len(x) > 1 else x)
                     df_possible.loc[:,j] = df_possible.loc[:,j].apply(lambda x: [y for y in x if y != drop_value] if len(x) > 1 else x)
                     for i_s in [x for x in df_possible.index.to_list() if x // 3 == i // 3]:
@@ -41,7 +41,7 @@ def iter_solver(df, print_status = False):
 
         for v in range(1,10): 
 
-            #### по строкам
+            #### check by rows 
             tmp = df_possible.applymap(lambda x: 1 * (v in x))
 
             tmp = tmp.loc[tmp.sum(axis = 1).where(lambda x: x == 1).dropna().index,:]\
@@ -56,7 +56,7 @@ def iter_solver(df, print_status = False):
                 df_possible.loc[vals['k_i'], vals['k_j']] = vals['new_val']
 
 
-            #### по столбцам
+            #### check by columns
             tmp = df_possible.applymap(lambda x: 1 * (v in x))
 
             tmp = tmp.loc[:,tmp.sum(axis = 0).where(lambda x: x == 1).dropna().index]\
@@ -71,7 +71,7 @@ def iter_solver(df, print_status = False):
                 df_possible.loc[vals['k_i'], vals['k_j']] = vals['new_val']
 
 
-            #### по квадратам
+            #### check by squares
 
             tmp = df_possible.applymap(lambda x: 1 * (v in x))
 
@@ -104,9 +104,8 @@ def iter_solver(df, print_status = False):
             print(iter_num)
         
     return df_possible
+
 #######################################################################################################################################
-
-
 
 @app.route("/")
 # def index_empty():
@@ -115,7 +114,7 @@ def iter_solver(df, print_status = False):
 
 @app.route("/hello")
 def index():
-    flash("Fill the number you know:")
+    flash("Fill the numbers you know:")
     return render_template("index.html")
 
 @app.route("/solve_sudoku", methods=["POST","GET"])
@@ -133,11 +132,6 @@ def solve():
                 request.form['x73'], request.form['x74'], request.form['x75'], request.form['x76'], request.form['x77'], request.form['x78'], request.form['x79'], request.form['x80'], request.form['x81']]
     
     input_list = [int(x) if x != '' else 0 for x in input_list]
-
-    # input_list = [0, 5, 0, 0, 3, 7, 6, 9, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 8, 0, 0, 0,
-    #    0, 0, 5, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0,
-    #    1, 0, 8, 0, 0, 9, 5, 0, 7, 0, 1, 0, 0, 0, 6, 3, 0, 0, 7, 0, 3, 0,
-    #    2, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 6, 0]
 
 
     df = pd.DataFrame({'val':input_list}).reset_index()\
@@ -163,10 +157,6 @@ def solve():
     print_status = False
 
 
-    # # ## fixit
-    # solution_found = True
-
-
     while not solution_found: 
 
         df_possible = iter_solver(df_possible)
@@ -187,7 +177,7 @@ def solve():
                     if print_status:
                         print('we made error! trying alternative')
                     df_possible = alternatives.pop()   
-                ## альтернатива оказалась неверна, переходим к предыдущей развилке                
+                ## alternative was wrong, come back to previous fork             
                 else: 
                     flash('solution found!')
                     solution_found = True  
@@ -196,11 +186,11 @@ def solve():
                 if print_status:
                     print('we made error! trying alternative')
                 df_possible = alternatives.pop()   
-            ## альтернатива оказалась неверна, переходим к предыдущей развилке
+            ## alternative was wrong, come back to previous fork 
         else:  
             if print_status:
                 print('no more logical moves, trying random step')
-            ## программа застопорилась, появилась развилка, находим оптимальную ячейку для рандомного выбора
+            ## no move logical moves, searching for optimal cell (with least possible variants) to try random alternatives
             min_length = df_possible.applymap(lambda x: len(x) if len(x) > 1 else np.nan).min().min()
             variants = df_possible.where(lambda _df: _df.applymap(lambda x: len(x)) == min_length).reset_index()\
                 .melt(id_vars = 'k_i', value_name = 'possible_numbers').dropna()\
@@ -213,29 +203,7 @@ def solve():
 
             df_possible = alternatives.pop()
 
-    
-
-    ############################
-
-    # solution_list = [4, 5, 2, 1, 3, 7, 6, 9, 8, 3, 9, 6, 5, 8, 2, 7, 1, 4, 8, 1, 7, 9,
-    #    4, 6, 5, 3, 2, 5, 7, 3, 6, 1, 4, 8, 2, 9, 9, 6, 4, 7, 2, 8, 3, 5,
-    #    1, 2, 8, 1, 3, 9, 5, 4, 7, 6, 1, 2, 5, 4, 6, 3, 9, 8, 7, 6, 3, 8,
-    #    2, 7, 9, 1, 4, 5, 7, 4, 9, 8, 5, 1, 2, 6, 3]
-    # tmp = pd.DataFrame({'val':solution_list}).reset_index()\
-    #     .rename(columns = {'index':'index_group'})\
-    #     .assign(row_n = lambda _df: _df.index_group // 9)\
-    #     .assign(col_n = lambda _df: _df.index_group % 9)\
-    #     .pivot(
-    #         index = 'row_n', 
-    #         columns = 'col_n',
-    #         values = 'val'
-    #     )
-
     tmp = df_possible.applymap(lambda x: x[0])
-
-
-    # return render_template("index.html")
-    # return render_template("solution.html")
 
     return render_template('solution.html',  tables=[tmp.to_html(classes='output_numbers', header = False, index = False)])
 
