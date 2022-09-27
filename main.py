@@ -1,6 +1,11 @@
+import logging
+from sys import stderr
 from flask import Flask, render_template, request, flash
+# from sys import stderr
 import pandas as pd 
 import numpy as np
+
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 app.secret_key = "secret_key_1755"
@@ -121,6 +126,7 @@ def index():
 
 def solve():
     # flash("sum is {}".format(int(request.form['x1']) + int(request.form['x2'])))
+    # print('antoshka', file = stderr)
     input_list = [request.form['x1'], request.form['x2'], request.form['x3'], request.form['x4'], request.form['x5'], request.form['x6'], request.form['x7'], request.form['x8'], request.form['x9'], 
                 request.form['x10'], request.form['x11'], request.form['x12'], request.form['x13'], request.form['x14'], request.form['x15'], request.form['x16'], request.form['x17'], request.form['x18'], 
                 request.form['x19'], request.form['x20'], request.form['x21'], request.form['x22'], request.form['x23'], request.form['x24'], request.form['x25'], request.form['x26'], request.form['x27'], 
@@ -131,8 +137,20 @@ def solve():
                 request.form['x64'], request.form['x65'], request.form['x66'], request.form['x67'], request.form['x68'], request.form['x69'], request.form['x70'], request.form['x71'], request.form['x72'], 
                 request.form['x73'], request.form['x74'], request.form['x75'], request.form['x76'], request.form['x77'], request.form['x78'], request.form['x79'], request.form['x80'], request.form['x81']]
     
-    input_list = [int(x) if x != '' else 0 for x in input_list]
 
+    # print(input_list, file = stderr)
+    input_arr_check = [float(x) if x != '' else 1 for x in input_list]
+
+    input_list = [int(float(x)) if x != '' else 0 for x in input_list]
+
+    ## fixed good sudoku if empty input:
+    if pd.Series(input_list).max() == 0:
+        input_list = [4, 5, 2, 1, 3, 7, 6, 9, 8, 3, 9, 6, 5, 8, 2, 7, 1, 4, 8, 1, 7, 9,
+                    4, 6, 5, 3, 2, 5, 7, 3, 6, 1, 4, 8, 2, 9, 9, 6, 4, 7, 2, 8, 3, 5,
+                    1, 2, 8, 1, 3, 9, 5, 4, 7, 6, 1, 2, 5, 4, 6, 3, 9, 8, 7, 6, 3, 8,
+                    2, 7, 9, 1, 4, 5, 7, 4, 9, 8, 5, 1, 2, 6, 3]
+
+    #################################################################
 
     df = pd.DataFrame({'val':input_list}).reset_index()\
         .rename(columns = {'index':'index_group'})\
@@ -153,9 +171,42 @@ def solve():
 
     alternatives = []
     solution_found = False
+    
 
     print_status = False
 
+    ## check for valid number input (only digits 1,2,3,4,5,6,7,9)
+    valid_values_flg = min([(x in [*range(1,10)]) for x in input_arr_check])
+    if not valid_values_flg: 
+        solution_found = True
+
+
+    ## quick check that there is no duplicates in one row/columns/square in input:
+    no_solution_input = False
+
+    tmp = df.copy()
+    tmp.index.name = 'k_i'
+    tmp.columns.name = 'k_j'
+    tmp = tmp\
+        .reset_index()\
+        .melt(id_vars = 'k_i', value_name = 'val')\
+        .assign(index_group = lambda _df: _df['k_i'] // 3 * 3 + _df['k_j'] // 3)
+
+    bad_row = pd.Series([df.loc[i].value_counts().max() for i in df.index]).max() > 1
+    bad_column = pd.Series([df.loc[:,j].value_counts().max() for j in df.columns]).max() > 1
+    bad_square = tmp.groupby('index_group')['val'].value_counts().max() > 1
+
+    del tmp 
+
+    print('bad_row: {}\nbad_column: {}\nbadsquare: {}'.format(bad_row, bad_column, bad_square), file = stderr)
+    print('rows: {}'.format([df.loc[i].value_counts().max() for i in df.index]))
+    print('columns: {}'.format([df.loc[:,j].value_counts().max() for j in df.columns]))
+
+    if max(bad_row,bad_column,bad_square):
+        no_solution_input = True
+        solution_found = True
+    ####################################
+    
 
     while not solution_found: 
 
@@ -176,16 +227,24 @@ def solve():
                 if min(nunique_1, nunique_2, nunique_3) < 9:
                     if print_status:
                         print('we made error! trying alternative')
-                    df_possible = alternatives.pop()   
+                    try:
+                        df_possible = alternatives.pop()
+                    except:
+                        # print('ERROR: no solution!')
+                        break
                 ## alternative was wrong, come back to previous fork             
                 else: 
-                    flash('solution found!')
+                    # flash('solution found!')
                     solution_found = True  
                 ## найдено решение
             else: 
                 if print_status:
                     print('we made error! trying alternative')
-                df_possible = alternatives.pop()   
+                try:
+                    df_possible = alternatives.pop()
+                except:
+                    # print('ERROR: no solution!')
+                    break
             ## alternative was wrong, come back to previous fork 
         else:  
             if print_status:
@@ -201,10 +260,26 @@ def solve():
                 tmp.loc[variants['k_i'], variants['k_j']] = [pos_num]
                 alternatives.append(tmp)
 
-            df_possible = alternatives.pop()
+            try:
+                df_possible = alternatives.pop()
+            except:
+                # print('ERROR: no solution!')
+                break
 
-    tmp = df_possible.applymap(lambda x: x[0])
-
-    return render_template('solution.html',  tables=[tmp.to_html(classes='output_numbers', header = False, index = False)])
-
+    if valid_values_flg:
+        if solution_found and not no_solution_input:
+            flash("Solution found!")
+            tmp = df_possible.applymap(lambda x: x[0])
+            return render_template('solution.html',  tables=[
+                tmp.style\
+                .set_uuid('solution')\
+                .hide_index()\
+                .hide_columns()\
+                .to_html()])
+        else:
+            flash("ERROR: no solution :(")
+            return render_template('solution.html')           
+    else: 
+        flash("Error in data! Please enter numbers in range 1...9")
+        return render_template('solution.html')
  
