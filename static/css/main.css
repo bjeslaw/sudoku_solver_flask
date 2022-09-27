@@ -124,7 +124,15 @@ div#loading {
 #T_solution_row3_col3,#T_solution_row3_col4,#T_solution_row3_col5,#T_solution_row4_col3,#T_solution_row4_col4,#T_solution_row4_col5,#T_solution_row5_col3,#T_solution_row5_col4,#T_solution_row5_col5,
 #T_solution_row6_col0, #T_solution_row6_col1,#T_solution_row6_col2,#T_solution_row6_col6,#T_solution_row6_col7,#T_solution_row6_col8,
 #T_solution_row7_col0, #T_solution_row7_col1,#T_solution_row7_col2,#T_solution_row7_col6,#T_solution_row7_col7,#T_solution_row7_col8,
-#T_solution_row8_col0, #T_solution_row8_col1,#T_solution_row8_col2,#T_solution_row8_col6,#T_solution_row8_col7,#T_solution_row8_col8
+#T_solution_row8_col0, #T_solution_row8_col1,#T_solution_row8_col2,#T_solution_row8_col6,#T_solution_row8_col7,#T_solution_row8_col8,
+
+#T_solutionrow0_col0, #T_solutionrow0_col1, #T_solutionrow0_col2, #T_solutionrow0_col6, #T_solutionrow0_col7, #T_solutionrow0_col8,
+#T_solutionrow1_col0, #T_solutionrow1_col1,#T_solutionrow1_col2,#T_solutionrow1_col6,#T_solutionrow1_col7,#T_solutionrow1_col8,
+#T_solutionrow2_col0, #T_solutionrow2_col1, #T_solutionrow2_col2, #T_solutionrow2_col6,#T_solutionrow2_col7, #T_solutionrow2_col8,
+#T_solutionrow3_col3,#T_solutionrow3_col4,#T_solutionrow3_col5,#T_solutionrow4_col3,#T_solutionrow4_col4,#T_solutionrow4_col5,#T_solutionrow5_col3,#T_solutionrow5_col4,#T_solutionrow5_col5,
+#T_solutionrow6_col0, #T_solutionrow6_col1,#T_solutionrow6_col2,#T_solutionrow6_col6,#T_solutionrow6_col7,#T_solutionrow6_col8,
+#T_solutionrow7_col0, #T_solutionrow7_col1,#T_solutionrow7_col2,#T_solutionrow7_col6,#T_solutionrow7_col7,#T_solutionrow7_col8,
+#T_solutionrow8_col0, #T_solutionrow8_col1,#T_solutionrow8_col2,#T_solutionrow8_col6,#T_solutionrow8_col7,#T_solutionrow8_col8
 {
         background-color: #cacad3;
 }
